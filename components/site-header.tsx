@@ -28,10 +28,10 @@ export function SiteHeader() {
                 <span className="sr-only">GitHub</span>
               </div>
             </Link>
+            <ThemeToggle />
+
             <Link
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
+              href={"/dashboard"}
             >
               <div
                 className={buttonVariants({
@@ -39,11 +39,10 @@ export function SiteHeader() {
                   variant: "ghost",
                 })}
               >
-                <Icons.twitter className="h-5 w-5 fill-current" />
-                <span className="sr-only">Twitter</span>
+                <Icons.user className="h-5 w-5 fill-current" />
+                <span className="sr-only">User</span>
               </div>
             </Link>
-            <ThemeToggle />
           </nav>
         </div>
       </div>
