@@ -18,7 +18,7 @@ export default function Home() {
             </div>
             <div className="space-x-4">
               <Button asChild>
-                <Link href="/login">Get Started</Link>
+                <Link href="/test">Take Test</Link>
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/about">Learn More</Link>
@@ -36,7 +36,9 @@ export default function Home() {
                 <CardDescription>Upload your test materials in PDF format.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Upload PDF</Button>
+                <Button className="w-full" asChild>
+                  <Link href="/test">Upload PDF</Link>
+                </Button>
               </CardContent>
             </Card>
             <Card>
@@ -45,7 +47,9 @@ export default function Home() {
                 <CardDescription>Start a timed test session.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Start Test</Button>
+                <Button className="w-full" asChild>
+                  <Link href="/test">Start Test</Link>
+                </Button>
               </CardContent>
             </Card>
             <Card>
