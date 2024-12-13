@@ -21,7 +21,7 @@ export default function Home() {
                 <Link href="/test">Take Test</Link>
               </Button>
               <Button variant="outline" asChild>
-                <Link href="/about">Learn More</Link>
+                <Link href="/about">About Us</Link>
               </Button>
             </div>
           </div>
