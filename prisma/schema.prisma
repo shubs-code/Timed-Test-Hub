@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "mongodb"
+  url = env("DATABASE_URL")
+}
+ 
+model User {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?     @unique
+  createdAt       DateTime    @default(now())
+  emailVerified   DateTime?   @map("verifiedAt")
+  image           String?
+  Account         Account[]
+  sessions        Session[]
+  tests           Test[]
+  @@map("users")
+}
+ 
+model Session {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken    String      @unique
+  userId          String      @db.ObjectId
+  expires         DateTime    @map("expiresAt")
+  user            User        @relation(fields: [userId], references: [id])
+  @@map("sessions")
+}
+ 
+model VerificationToken {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  identifier      String
+  token           String      @unique
+  expires         DateTime    @map("expiresAt")
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Account {
+  id                        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId                    String  @db.ObjectId
+  type                      String
+  provider                  String
+  providerAccountId         String
+  refresh_token             String?  @db.String
+  refresh_token_expires_in  Int?
+  access_token              String?  @db.String
+  expires_at                Int?
+  token_type                String?
+  scope                     String?
+  id_token                  String?  @db.String
+  session_state             String?
+  user                      User     @relation(fields: [userId], references: [id])
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Test {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  authorId         String    @db.ObjectId
+  name             String
+  createdAt        DateTime  @default(now())
+  verified        Boolean   @default(false)
+  skipped_questions Int
+  total_questions Int
+  correct_answers  Int
+  test_data        Json?
+  user             User      @relation(fields: [authorId], references: [id])
+  @@map("tests")
+}
