@@ -54,7 +54,7 @@ export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupM
         <DialogHeader>
           <DialogTitle>Test Setup</DialogTitle>
           <DialogDescription>
-            Enter the details for your test. Click save when you're done.
+            Enter the details for your test. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
