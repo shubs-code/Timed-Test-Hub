@@ -1,59 +1,149 @@
-'use client'
-
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { ChevronLeft, ChevronRight, Menu } from 'lucide-react'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 
-interface TestInterfaceProps {
-  pdfFile: File | null
+interface TestSetup {
+  name: string;
+  description: string;
+  questionCount: number;
+  optionsPerQuestion: number;
 }
 
-export default function TestInterface({ pdfFile }: TestInterfaceProps) {
-  const [timeLeft, setTimeLeft] = useState(3600) // 1 hour in seconds
-  const [isRunning, setIsRunning] = useState(true)
+interface TestInterfaceProps {
+  testSetup: TestSetup;
+}
+
+export default function TestInterface({ testSetup }: TestInterfaceProps) {
+  const [currentQuestion, setCurrentQuestion] = useState(1)
+  const [timeSpent, setTimeSpent] = useState<number[]>(new Array(testSetup.questionCount).fill(0))
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(new Array(testSetup.questionCount).fill(''))
 
   useEffect(() => {
-    let timer: NodeJS.Timeout
-    if (isRunning && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prevTime => prevTime - 1)
-      }, 1000)
-    } else if (timeLeft === 0) {
-      setIsRunning(false)
-    }
+    const timer = setInterval(() => {
+      setTimeSpent(prev => {
+        const newTimes = [...prev]
+        newTimes[currentQuestion - 1]++
+        return newTimes
+      })
+    }, 1000)
+
     return () => clearInterval(timer)
-  }, [isRunning, timeLeft])
+  }, [currentQuestion])
+
+  const handleOptionSelect = (option: string) => {
+    setSelectedAnswers(prev => {
+      const newAnswers = [...prev]
+      newAnswers[currentQuestion - 1] = option
+      return newAnswers
+    })
+  }
+
+  const handleNavigation = (direction: 'prev' | 'next') => {
+    if (direction === 'prev' && currentQuestion > 1) {
+      setCurrentQuestion(prev => prev - 1)
+    } else if (direction === 'next' && currentQuestion < testSetup.questionCount) {
+      setCurrentQuestion(prev => prev + 1)
+    }
+  }
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Test in Progress</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col space-y-4">
-          <div className="text-2xl font-bold text-center">
-            Time Remaining: {formatTime(timeLeft)}
-          </div>
-          <div className="border rounded p-4 h-96 overflow-auto">
-            {/* This is where you would render the PDF content */}
-            <p>PDF Content for {pdfFile?.name} would be displayed here.</p>
-            <p>You would need to use a PDF rendering library like react-pdf to display the actual PDF content.</p>
-          </div>
-          <div className="flex justify-center space-x-4">
-            <Button onClick={() => setIsRunning(!isRunning)}>
-              {isRunning ? 'Pause' : 'Resume'}
-            </Button>
-            <Button variant="destructive">End Test</Button>
+    <div className="relative min-h-screen">
+      <Card className="max-w-xl mx-auto mt-8 p-6">
+        <div className="flex justify-between items-center mb-6">
+          <div className="text-lg font-medium text-cyan-500">
+            Q.No: {currentQuestion} Time: {formatTime(timeSpent[currentQuestion - 1])}
           </div>
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          {['A', 'B', 'C', 'D'].map((option) => (
+            <Button
+              key={option}
+              variant="outline"
+              className={`h-20 text-lg ${
+                selectedAnswers[currentQuestion - 1] === option
+                  ? 'border-cyan-500 border-2'
+                  : 'border-gray-200'
+              }`}
+              onClick={() => handleOptionSelect(option)}
+            >
+              {option}
+            </Button>
+          ))}
+        </div>
+
+        <div className="flex justify-between items-center">
+          <Button
+            variant="ghost"
+            onClick={() => handleNavigation('prev')}
+            disabled={currentQuestion === 1}
+            className="text-cyan-500"
+          >
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            PREV
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleNavigation('next')}
+            disabled={currentQuestion === testSetup.questionCount}
+            className="text-cyan-500"
+          >
+            NEXT
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </Card>
+
+      <div className="fixed bottom-4 right-4">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Test Menu</SheetTitle>
+              <SheetDescription>
+                Access test options and navigation
+              </SheetDescription>
+            </SheetHeader>
+            <div className="grid gap-4 py-4">
+              <Button variant="outline" className="w-full">
+                Question Palette
+              </Button>
+              <Button variant="outline" className="w-full">
+                Mark for Review
+              </Button>
+              <Button variant="outline" className="w-full">
+                Clear Response
+              </Button>
+              <Button variant="outline" className="w-full">
+                Instructions
+              </Button>
+              <Button variant="outline" className="w-full">
+                Submit Test
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
   )
 }
 

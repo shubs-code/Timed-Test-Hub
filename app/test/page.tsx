@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import PDFViewer from '@/components/pdf-viewer'
 import TestSetupModal from '@/components/test-setup-modal'
+import TestInterface from '@/components/test-interface'
 
 interface TestSetup {
   name: string;
@@ -18,6 +19,7 @@ export default function TestPage() {
   const [file, setFile] = useState<File | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [testSetup, setTestSetup] = useState<TestSetup | null>(null)
+  const [isTestStarted, setIsTestStarted] = useState(false)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -34,6 +36,11 @@ export default function TestPage() {
   const handleTestSetup = (setup: TestSetup) => {
     setTestSetup(setup)
     setIsModalOpen(false)
+    setIsTestStarted(true)
+  }
+
+  if (isTestStarted && testSetup) {
+    return <TestInterface testSetup={testSetup} />
   }
 
   return (
@@ -62,15 +69,9 @@ export default function TestPage() {
         onSubmit={handleTestSetup}
       />
 
-      {file && testSetup && (
+      {file && !isTestStarted && (
         <Card>
-          <CardHeader>
-            <CardTitle>{testSetup.name}</CardTitle>
-          </CardHeader>
           <CardContent>
-            <p className="mb-4">{testSetup.description}</p>
-            <p className="mb-4">Number of questions: {testSetup.questionCount}</p>
-            <p className="mb-4">Options per question: {testSetup.optionsPerQuestion}</p>
             <PDFViewer file={file} />
           </CardContent>
         </Card>
