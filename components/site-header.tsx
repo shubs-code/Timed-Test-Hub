@@ -1,4 +1,6 @@
+"use client"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -7,6 +9,8 @@ import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export function SiteHeader() {
+  const { data: session } = useSession();
+
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -30,19 +34,25 @@ export function SiteHeader() {
             </Link>
             <ThemeToggle />
 
-            <Link
-              href={"/dashboard"}
-            >
-              <div
-                className={buttonVariants({
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <Icons.user className="h-5 w-5 fill-current" />
-                <span className="sr-only">User</span>
-              </div>
-            </Link>
+            {session ? (
+              <img
+                src={session?.user?.image??""}
+                alt="User Profile"
+                className="h-8 w-8 rounded-full cursor-pointer"
+              />
+            ) : (
+              <Link href="/login">
+                <div
+                  className={buttonVariants({
+                    size: "icon",
+                    variant: "ghost",
+                  })}
+                >
+                  <Icons.user className="h-5 w-5 fill-current" />
+                  <span className="sr-only">Login</span>
+                </div>
+              </Link>
+            )}
           </nav>
         </div>
       </div>
