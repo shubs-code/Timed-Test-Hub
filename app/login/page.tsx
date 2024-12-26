@@ -4,16 +4,21 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useState } from "react"
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter()
+  const { data: session } = useSession();
+
+  if(session?.user){
+    router.push('/')
+  }
 
   const handleGoogleLogin = async () => {
     setIsLoading(true)
     // Implement Google OAuth login logic here
-    signIn();
-    await new Promise(resolve => setTimeout(resolve, 2000)) // Simulating API call
-    setIsLoading(false)
+    await signIn();
   }
 
   return (

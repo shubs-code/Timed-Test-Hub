@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import PDFViewer from '@/components/pdf-viewer'
 import TestSetupModal from '@/components/test-setup-modal'
 import TestOverlay from '@/components/test-overlay'
+import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 
 interface TestSetup {
   name: string;
@@ -20,6 +22,13 @@ export default function TestPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [testSetup, setTestSetup] = useState<TestSetup | null>(null)
   const [isTestStarted, setIsTestStarted] = useState(false)
+
+  const { data: session } = useSession();
+  const router = useRouter()
+
+  if(!session?.user){
+    router.push('/login')
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
