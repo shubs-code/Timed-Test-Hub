@@ -1,5 +1,7 @@
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function POST(request) {
     const { name, authorEmail, description, test_data, options, timeTaken } = await request.json();
@@ -31,5 +33,25 @@ export async function POST(request) {
       return NextResponse.json(test, { status: 201 });
     } catch (error) {
       return NextResponse.json({ error: 'Failed to create test' }, { status: 500 });
+    }
+  }
+
+  export async function GET(request) {
+    const session = await getServerSession(authOptions);
+    console.log(session)
+    if (!session || !session.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  
+    try {
+      const tests = await db.test.findMany({
+        where: {
+          authorId: session.user.id,
+        },
+      });
+  
+      return NextResponse.json(tests, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ error: 'Failed to fetch tests' }, { status: 500 });
     }
   }
