@@ -61,12 +61,15 @@ model Test {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   authorId         String    @db.ObjectId
   name             String
-  createdAt        DateTime  @default(now())
-  verified        Boolean   @default(false)
-  skipped_questions Int
-  total_questions Int
-  correct_answers  Int
+  description      String?
+  createdAt        DateTime?  @default(now())
+  verified        Boolean?   @default(false)
+  skipped_questions Int?
+  total_questions Int?
+  correct_answers  Int?
   test_data        Json?
-  user             User      @relation(fields: [authorId], references: [id])
+  options          Json?     
+  timeTaken        Int?     
+  user             User?      @relation(fields: [authorId], references: [id])
   @@map("tests")
 }

@@ -12,6 +12,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 interface TestSetup {
   name: string;
@@ -27,7 +29,8 @@ export default function TestOverlay({ testSetup }: TestOverlayProps) {
   const [currentQuestion, setCurrentQuestion] = useState(1)
   const [timeSpent, setTimeSpent] = useState<number[]>(new Array(testSetup.questionCount).fill(0))
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(new Array(testSetup.questionCount).fill(''))
-
+  const { data: session } = useSession();
+  const router = useRouter();
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeSpent(prev => {
@@ -62,6 +65,31 @@ export default function TestOverlay({ testSetup }: TestOverlayProps) {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
+  const handleTestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const response = await fetch('/api/tests', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: testSetup.name,
+        authorEmail: session?.user?.email, // Replace with actual author ID
+        options: [], // Replace with actual options data
+        timeTaken: 0, // Replace with actual time taken
+      }),
+    });
+  
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Test saved:', data);
+      router.push("/");
+    } else {
+      console.error('Failed to save test');
+    }
+  };
+
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <Card className="w-80 p-4 bg-white shadow-lg">
@@ -95,7 +123,7 @@ export default function TestOverlay({ testSetup }: TestOverlayProps) {
                 <Button variant="outline" className="w-full">
                   Instructions
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={handleTestSubmit}>
                   Submit Test
                 </Button>
               </div>

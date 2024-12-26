@@ -24,6 +24,6 @@
     ],
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/providers/provider.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/providers/provider.jsx", "app/api/tests/route.ts"],
   "exclude": ["node_modules"]
 }

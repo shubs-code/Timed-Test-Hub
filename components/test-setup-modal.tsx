@@ -37,7 +37,7 @@ export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupM
     const { name, value } = e.target
     setTestSetup(prev => ({
       ...prev,
-      [name]: name === 'questionCount' || name === 'optionsPerQuestion' ? parseInt(value) || 0 : value,
+      [name]: name === 'questionCount' ? parseInt(value) || 0 : value,
     }))
   }
 
