@@ -24,7 +24,6 @@ interface TestSetup {
   name: string;
   description: string;
   questionCount: number;
-  optionsPerQuestion: number;
 }
 
 export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupModalProps) {
@@ -32,7 +31,6 @@ export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupM
     name: '',
     description: '',
     questionCount: 0,
-    optionsPerQuestion: 0,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -92,19 +90,6 @@ export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupM
                 name="questionCount"
                 type="number"
                 value={testSetup.questionCount}
-                onChange={handleChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="optionsPerQuestion" className="text-right">
-                Options
-              </Label>
-              <Input
-                id="optionsPerQuestion"
-                name="optionsPerQuestion"
-                type="number"
-                value={testSetup.optionsPerQuestion}
                 onChange={handleChange}
                 className="col-span-3"
               />

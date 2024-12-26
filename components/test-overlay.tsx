@@ -17,7 +17,6 @@ interface TestSetup {
   name: string;
   description: string;
   questionCount: number;
-  optionsPerQuestion: number;
 }
 
 interface TestOverlayProps {
