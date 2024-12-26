@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet"
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import { Description } from '@radix-ui/react-dialog'
 
 interface TestSetup {
   name: string;
@@ -75,9 +76,17 @@ export default function TestOverlay({ testSetup }: TestOverlayProps) {
       },
       body: JSON.stringify({
         name: testSetup.name,
-        authorEmail: session?.user?.email, // Replace with actual author ID
-        options: [], // Replace with actual options data
-        timeTaken: 0, // Replace with actual time taken
+        description:testSetup.description,
+        authorEmail: session?.user?.email,
+        test_data:timeSpent.map((item, index) => {
+          return { 
+            time: item, 
+            option: selectedAnswers[index],
+            isCorrect:false
+          };
+        }),
+        options: selectedAnswers, 
+        timeTaken: timeSpent.reduce((prev, cur)=>prev+cur, 0),
       }),
     });
   

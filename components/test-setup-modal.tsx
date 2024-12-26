@@ -96,7 +96,7 @@ export default function TestSetupModal({ isOpen, onClose, onSubmit }: TestSetupM
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Continue To Test</Button>
           </DialogFooter>
         </form>
       </DialogContent>
