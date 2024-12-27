@@ -1,6 +1,7 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Clock, FileText } from 'lucide-react'
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Test {
@@ -30,6 +31,7 @@ export default function DashboardPage() {
     
   const [tests, setTests] = useState<Test[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTests = async () => {
@@ -60,7 +62,7 @@ export default function DashboardPage() {
       <h1 className="text-3xl font-bold mb-6">Test Dashboard</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {tests.map((item) => (
-          <Card key={item.id}>
+          <Card key={item.id} onClick={()=>{router.push(`/analytics/${item.id}`)}}>
             <CardHeader>
               <CardTitle>{item.name}</CardTitle>
             </CardHeader>
