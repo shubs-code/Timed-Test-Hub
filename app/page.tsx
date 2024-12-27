@@ -58,8 +58,8 @@ export default function Home() {
                 <CardDescription>Review your performance metrics.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">
-                <Link href="/test">View Analytics
+                <Button className="w-full" asChild>
+                <Link href="/dashboard">View Analytics
                 </Link></Button>
               </CardContent>
             </Card>
