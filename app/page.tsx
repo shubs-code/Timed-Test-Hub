@@ -58,7 +58,9 @@ export default function Home() {
                 <CardDescription>Review your performance metrics.</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">View Analytics</Button>
+                <Button className="w-full">
+                <Link href="/test">View Analytics
+                </Link></Button>
               </CardContent>
             </Card>
           </div>
