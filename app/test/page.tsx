@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -25,9 +25,11 @@ export default function TestPage() {
   const { data: session } = useSession();
   const router = useRouter()
 
-  if(!session?.user){
-    router.push('/login')
-  }
+  useEffect(()=>{
+    if(!session?.user){
+      router.push('/login')
+    }
+  },[])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
