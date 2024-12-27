@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Description } from '@radix-ui/react-dialog'
+import { toast } from 'react-toastify'
 
 interface TestSetup {
   name: string;
@@ -93,6 +94,7 @@ export default function TestOverlay({ testSetup }: TestOverlayProps) {
     if (response.ok) {
       const data = await response.json();
       console.log('Test saved:', data);
+      toast("Test Saved");
       router.push("/");
     } else {
       console.error('Failed to save test');

@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import Provider from '@/components/providers/Provider'
+import { ToastContainer } from "react-toastify"
 
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default function RootLayout({ children, pageProps }: { children: React.Re
               <TailwindIndicator />
             </ThemeProvider>
           </Provider>
-          
+          <ToastContainer position="bottom-right"/>
         </body>
       </html>
     </>
