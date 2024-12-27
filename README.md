@@ -1,22 +1,59 @@
-# next-template
+Modules 
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+deployed on 
+https://test.codecrave.tech/
+https://timed-test-hub.vercel.app/
 
-## Usage
+Login {
+    Google Auth Login 
+    jwt based session strategy
+    single sign on no need to remember password
+    used enxt auth
+    google clod provider
+}
 
-```bash
-npx create-next-app -e https://github.com/shadcn/next-template
-```
+pdf loading and viewing module{
+    pdf worker.js 
+    viewing and in ful screen pdf 
 
-## Features
+}
 
-- Next.js 13 App Directory
-- Radix UI Primitives
-- Tailwind CSS
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Tailwind CSS class sorting, merging and linting.
+test setup {
+    ui for test details 
+    options or test screen 
+    side menu for test settings and submission
+    sumbitting test details
+}
 
-## License
+dashboard{
+    view the list of test taken
+    sumary of each test with time name description
+}
 
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+analytics page{
+    recharts for graph
+    detailed test data
+
+}
+
+skeleton loading{
+    for seamless usr interaction used skeleton loading 
+}
+
+theme management {
+    dark theme
+    white theme
+}
+
+prisma {
+    schema for use data 
+    authentication
+    test details
+}
+
+api's{
+    test creation 
+    single test fetch
+    user session retrieve
+    serverSideSession setup
+}
