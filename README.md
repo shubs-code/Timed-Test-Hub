@@ -1,59 +1,84 @@
-Modules 
+# 🧠 Timed Test Hub
 
-deployed on 
-https://test.codecrave.tech/
-https://timed-test-hub.vercel.app/
+A full-stack web application for taking and analyzing timed tests with a clean UI, PDF viewer, Google-based authentication, and in-depth analytics.
 
-Login {
-    Google Auth Login 
-    jwt based session strategy
-    single sign on no need to remember password
-    used enxt auth
-    google clod provider
-}
+> 🔗 **Live Demo**
+> - 🌐 [Frontend - Vercel](https://timed-test-hub.vercel.app/)
+> - ⚙️ [Backend - CodeCrave](https://test.codecrave.tech/)
 
-pdf loading and viewing module{
-    pdf worker.js 
-    viewing and in ful screen pdf 
+---
 
-}
+## 🚀 Features
 
-test setup {
-    ui for test details 
-    options or test screen 
-    side menu for test settings and submission
-    sumbitting test details
-}
+### 🔐 Authentication
+- Google Sign-In via **NextAuth.js**
+- JWT-based session strategy
+- Single Sign-On (SSO) – no password required
+- Integrated with **Google Cloud Provider**
 
-dashboard{
-    view the list of test taken
-    sumary of each test with time name description
-}
+### 📄 PDF Viewer
+- Load and view PDF documents
+- Uses `pdf.worker.js`
+- Fullscreen support for enhanced focus
 
-analytics page{
-    recharts for graph
-    detailed test data
+### 🧪 Test Setup
+- UI to configure test details
+- Multiple-choice test interface
+- Side menu for test settings and submission
+- Submits and stores test results
 
-}
+### 📊 Dashboard
+- View a list of all completed tests
+- Test summary: name, duration, description
 
-skeleton loading{
-    for seamless usr interaction used skeleton loading 
-}
+### 📈 Analytics Page
+- Graphs powered by **Recharts**
+- Detailed performance data and insights
 
-theme management {
-    dark theme
-    white theme
-}
+### 🦴 Skeleton Loading
+- Seamless user experience during data fetch
+- Skeleton placeholders for UI sections
 
-prisma {
-    schema for use data 
-    authentication
-    test details
-}
+### 🎨 Theme Management
+- Toggle between **Dark** and **Light** themes
+- Automatic adaptation to system preferences
 
-api's{
-    test creation 
-    single test fetch
-    user session retrieve
-    serverSideSession setup
-}
+---
+
+## 🛠 Tech Stack
+
+| Tech            | Description                             |
+|-----------------|-----------------------------------------|
+| **Next.js**     | Frontend and server-side rendering      |
+| **NextAuth.js** | Authentication and session management   |
+| **Prisma**      | ORM for DB schema and queries           |
+| **Recharts**    | Data visualization                      |
+| **Tailwind CSS**| Utility-first CSS framework             |
+| **PDF.js**      | PDF rendering in browser                |
+
+---
+
+## 🗃 Prisma Schema
+
+Defines the schema for:
+- User data
+- Authentication sessions
+- Test metadata and answers
+
+---
+
+## 📡 API Endpoints
+
+- `POST /api/test/create` – Create a new test
+- `GET /api/test/[id]` – Fetch a specific test
+- `GET /api/session` – Get current user session
+- `getServerSession()` for server-side authentication
+
+---
+
+## 🧪 Getting Started (Local Development)
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/timed-test-hub.git
+   cd timed-test-hub
