@@ -82,3 +82,24 @@ Defines the schema for:
    ```bash
    git clone https://github.com/your-username/timed-test-hub.git
    cd timed-test-hub
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+
+3. **Create Environment Variables**
+   ```bash
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   NEXTAUTH_SECRET=your-nextauth-secret
+   DATABASE_URL=your-database-url
+
+4. **Push Prisma Schema to the Database**
+   ```bash
+   npx prisma db push
+
+5. **Run the Development Server**
+   ```bash
+   npm run dev
+
+
